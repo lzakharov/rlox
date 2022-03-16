@@ -23,7 +23,12 @@ static KEYWORDS: phf::Map<&'static str, TokenType> = phf_map! {
     "while" =>  TokenType::While,
 };
 
-pub struct Scanner {
+pub fn scan_tokens(source: &str) -> Result<Vec<Token>, Error> {
+    let scanner = Scanner::new(source);
+    scanner.scan_tokens()
+}
+
+struct Scanner {
     source: Vec<char>,
     tokens: Vec<Token>,
     start: usize,
@@ -32,7 +37,7 @@ pub struct Scanner {
 }
 
 impl Scanner {
-    pub fn new(source: &str) -> Scanner {
+    fn new(source: &str) -> Scanner {
         Scanner {
             source: source.chars().collect(),
             tokens: Vec::new(),
@@ -42,7 +47,7 @@ impl Scanner {
         }
     }
 
-    pub fn scan_tokens(mut self) -> Result<Vec<Token>, Error> {
+    fn scan_tokens(mut self) -> Result<Vec<Token>, Error> {
         while !self.is_at_end() {
             self.start = self.current;
             self.scan_token()?;

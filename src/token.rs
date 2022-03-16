@@ -1,3 +1,5 @@
+use std::fmt;
+
 use crate::object::Object;
 
 #[derive(Debug)]
@@ -28,11 +30,11 @@ impl Token {
     }
 }
 
-// impl fmt::Display for Token {
-//     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-//         write!(f, "{} {} {}", self.typ, self.lexeme, self.literal)
-//     }
-// }
+impl fmt::Display for Token {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{}", self.lexeme)
+    }
+}
 
 #[derive(Debug, Clone)]
 pub enum TokenType {

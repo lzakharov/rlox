@@ -3,12 +3,12 @@ use std::fs;
 use std::io::{self, BufRead, Write};
 
 mod error;
+mod grammar;
 mod object;
 mod scanner;
 mod token;
 
 use error::Error;
-use scanner::Scanner;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -63,8 +63,7 @@ fn print_single_line(line: &str) {
 }
 
 fn run(source: &str) -> Result<(), Error> {
-    let scanner = Scanner::new(source);
-    let tokens = scanner.scan_tokens();
+    let tokens = scanner::scan_tokens(source);
 
     for token in tokens {
         println!("{:?}", token);
