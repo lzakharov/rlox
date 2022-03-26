@@ -3,6 +3,7 @@ use std::fmt;
 use crate::object::Object;
 use crate::token::Token;
 
+#[derive(Debug)]
 pub enum Expr {
     Binary(Box<Expr>, Token, Box<Expr>),
     Grouping(Box<Expr>),

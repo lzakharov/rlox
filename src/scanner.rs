@@ -112,7 +112,7 @@ impl Scanner {
             '"' => self.string()?,
             '0'..='9' => self.number()?,
             'a'..='z' | 'A'..='Z' => self.identifier(),
-            _ => return Err(Error::new(self.line, "Unexpected character".to_string())),
+            _ => return Err(Error::error(self.line, "Unexpected character".to_string())),
         }
 
         Ok(())
@@ -174,7 +174,7 @@ impl Scanner {
         }
 
         if self.is_at_end() {
-            return Err(Error::new(self.line, "Unterminated string".to_string()));
+            return Err(Error::error(self.line, "Unterminated string".to_string()));
         }
 
         // The closing ".

@@ -3,8 +3,9 @@ use std::fs;
 use std::io::{self, BufRead, Write};
 
 mod error;
-mod grammar;
+mod expr;
 mod object;
+mod parser;
 mod scanner;
 mod token;
 
@@ -63,11 +64,8 @@ fn print_single_line(line: &str) {
 }
 
 fn run(source: &str) -> Result<(), Error> {
-    let tokens = scanner::scan_tokens(source);
-
-    for token in tokens {
-        println!("{:?}", token);
-    }
-
+    let tokens = scanner::scan_tokens(source)?;
+    let expr = parser::parse(tokens)?;
+    println!("{}", expr);
     Ok(())
 }

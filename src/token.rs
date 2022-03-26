@@ -2,7 +2,7 @@ use std::fmt;
 
 use crate::object::Object;
 
-#[derive(Debug)]
+#[derive(Debug, Clone)]
 pub struct Token {
     typ: TokenType,
     lexeme: String,
@@ -28,6 +28,22 @@ impl Token {
             line: line,
         }
     }
+
+    pub fn is(&self, typ: TokenType) -> bool {
+        self.typ == typ
+    }
+
+    pub fn get_type(&self) -> TokenType {
+        self.typ
+    }
+
+    pub fn get_literal(&self) -> Option<Object> {
+        self.literal.clone()
+    }
+
+    pub fn get_line(&self) -> usize {
+        self.line
+    }
 }
 
 impl fmt::Display for Token {
@@ -36,7 +52,7 @@ impl fmt::Display for Token {
     }
 }
 
-#[derive(Debug, Clone)]
+#[derive(Debug, PartialEq, Clone, Copy)]
 pub enum TokenType {
     // Single-character tokens.
     LeftParen,
